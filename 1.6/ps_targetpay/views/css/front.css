@@ -1,0 +1,31 @@
+p.payment_module a.tp_method:after {
+    display: block;
+    content: "\f054";
+    position: absolute;
+    right: 15px;
+    margin-top: -11px;
+    top: 50%;
+    font-family: "FontAwesome";
+    font-size: 25px;
+    height: 22px;
+    width: 14px;
+    color: #777777;
+}
+
+p.payment_module a.bank {
+    background: #fbfbfb;
+    width: 48%;
+    display: inline-block;
+    margin-bottom: 5px;
+    padding: 33px 25px 34px 85px;
+    font-size: 16px;
+}
+
+#ideal-bankselect, #sofort-bankselect {
+    display: none;
+}
+
+
+p.payment_module a.tp_method:hover, p.payment_module a.bank:hover {
+    background-color: #f6f6f6;
+}
