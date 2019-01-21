@@ -1,8 +1,8 @@
 # iDEAL plugin for Prestashop 1.6
 
 ## Usage
-Use this plugin to add support for iDEAL, Mister Cash, Sofort and other payment methods of 
-TargetPay.com and Digiwallet.nl to your webstore. 
+Use this plugin to add support for iDEAL, Bancontact, Sofort ,Paysafecard , Afterpay, Bankwire, Refunds    
+First create an account at https://www.Digiwallet.nl
 
 ## Supported Paymethods
 | Paymethod	|   supported	| 
