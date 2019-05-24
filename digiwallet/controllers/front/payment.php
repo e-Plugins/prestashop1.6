@@ -51,7 +51,7 @@ class DigiwalletPaymentModuleFrontController extends ModuleFrontController
                 $cartId,
                 $state,
                 $amount,
-                $digiwallet->displayName . "(" . $listMethods[$digiwalletObj->getPayMethod()]['name'] . ")",
+                $listMethods[$digiwalletObj->getPayMethod()]['name'],
                 null,
                 array(
                     "transaction_id" => $digiwalletObj->getTransactionId()

@@ -36,7 +36,7 @@ class DigiwalletreturnUrlModuleFrontController extends ModuleFrontController
         }
         
         $order = new Order((int) $transactionInfoArr['order_id']);
-        if ($order->current_state == Configuration::get('PS_OS_ERROR')) {
+        if (in_array($order->current_state, array(Configuration::get('PS_OS_ERROR'), Configuration::get('PS_OS_CANCELED')))) {
             $opc = (bool) Configuration::get('PS_ORDER_PROCESS_TYPE');
             if ($opc) {
                 $link = 'index.php?controller=order-opc&digiwalleterror=' . urldecode($retMsg);
