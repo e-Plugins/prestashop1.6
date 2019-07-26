@@ -35,7 +35,11 @@ class DigiwalletPaymentModuleFrontController extends ModuleFrontController
         $digiwalletObj->setDescription('Cart id: ' . $cartId);
         $digiwalletObj->setReturnUrl(Context::getContext()->link->getModuleLink('digiwallet', 'returnUrl'));
         $digiwalletObj->setReportUrl(Context::getContext()->link->getModuleLink('digiwallet', 'notifyUrl'));
-        
+        $customer = new Customer((int)($cart->id_customer));
+        if ($customer->email) {
+            $digiwalletObj->bindParam('email', $customer->email);
+        }
+
         if ($digiwalletObj->getPayMethod() == 'AFP') {
             $this->additionalParametersAFP($cart, $digiwalletObj); // add addtitional params for afterpay and bankwire
         }
