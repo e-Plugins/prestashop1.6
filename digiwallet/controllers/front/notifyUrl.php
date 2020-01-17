@@ -31,7 +31,8 @@ class DigiwalletnotifyUrlModuleFrontController extends ModuleFrontController
         
         $transactionInfoArr = $digiwallet->selectTransaction($trxid);
         if ($transactionInfoArr) {
-            $return = $digiwallet->updateOrderAfterCheck($transactionInfoArr);
+            $digiwallet->rebuildCart($transactionInfoArr['order_id']);
+            $return = $digiwallet->updateOrderAfterCheck($transactionInfoArr, true);
             echo $return . "<br />";
             die('Done version 1.6.xx');
         }

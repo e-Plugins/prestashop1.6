@@ -26,7 +26,7 @@ Before you can use the plugin, please sign up for a Digiwallet account on www.di
 Note that the plugin can be used in a live environment only after it has been completed with your details and
 is approved by their compliance department. This would normally take about one working day. 
 
-You can obtain a personalized version of the plugin on https://www.idealplugins.nl/
+You can obtain a personalized version of the plugin on https://www.e-plugins.nl/
 
 ### 2. Download or clone this repository
 
@@ -34,7 +34,7 @@ We recommend cloning the repository so you can easily get updates.
 
 ### 3. Setting up
 
-Check out the specific installation instructions and tips on https://www.idealplugins.nl/plugin/prestashop1.6#install
+Check out the specific installation instructions and tips on https://www.e-plugins.nl/plugin/prestashop1.6#install
 
 ## Upgrading from an older version of this plugin
 
@@ -42,7 +42,7 @@ Since we did a complete rebuild of the plugin it is recommended to do a clean in
 
 ## Troubleshooting
 
-Please see the FAQ on https://www.idealplugins.nl/plugin/prestashop1.6#help
+Please see the FAQ on https://www.e-plugins.nl/plugin/prestashop1.6#help
 
 ## Prestashop 1.7
-If you use Prestashop 1.7 or above, please check out our plugin for that version: https://github.com/idealplugins/prestashop1.7
+If you use Prestashop 1.7 or above, please check out our plugin for that version: https://github.com/e-plugins/prestashop1.7
