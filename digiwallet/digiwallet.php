@@ -33,7 +33,7 @@ class Digiwallet extends PaymentModule
         $this->currencies = true;
         $this->currencies_mode = 'checkbox';
         $this->bootstrap = true;
-        $this->module_key = '6a09d2e96084ce4b10adea1687ca5b2d';
+        $this->module_key = '87b9b7383334aff69cedb34d8e1e996e';
         parent::__construct();
         $this->displayName = $this->l('Digiwallet for Prestashop');
         $this->description = $this->l('Activates iDEAL, Bancontact, Sofort Banking, Visa / Mastercard Credit cards, PaysafeCard, AfterPay, BankWire, PayPal and Refunds in Prestashop');
