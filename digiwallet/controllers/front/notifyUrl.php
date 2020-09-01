@@ -1,7 +1,7 @@
 <?php
 /**
  * @author  DigiWallet.nl
- * @copyright Copyright (C) 2018 e-plugins.nl
+ * @copyright Copyright (C) 2020 e-plugins.nl
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * @url      http://www.e-plugins.nl
  *
@@ -13,7 +13,7 @@
 class DigiwalletnotifyUrlModuleFrontController extends ModuleFrontController
 {
     public $ssl = true;
-    
+
     /**
      *
      * @see FrontController::initContent()
@@ -21,15 +21,29 @@ class DigiwalletnotifyUrlModuleFrontController extends ModuleFrontController
     public function initContent()
     {
         $digiwallet = $this->module;
-        $trxid = Tools::getValue('trxid');
-        if (empty($trxid)) { //paypal use paypalid instead of trxid
-            $trxid = Tools::getValue('acquirerID');
+        $method = Tools::getValue('method');
+        switch ($method) {
+            case 'PYP':
+                $trxid = Tools::getValue('acquirerID');
+                break;
+            case 'AFP':
+                $trxid = Tools::getValue('invoiceID');
+                break;
+            case 'EPS':
+            case 'GIP':
+                $trxid = Tools::getValue('transactionID');
+                break;
+            case 'IDE':
+            case 'MRC':
+            case 'DEB':
+            case 'CC':
+            case 'WAL':
+            case 'BW':
+            default:
+                $trxid = Tools::getValue('trxid');
         }
-        if (empty($trxid)) { //afterpay use invoiceID instead of trxid
-            $trxid = Tools::getValue('invoiceID');
-        }
-        
-        $transactionInfoArr = $digiwallet->selectTransaction($trxid);
+
+        $transactionInfoArr = $digiwallet->selectTransaction($trxid, $method);
         if ($transactionInfoArr) {
             $digiwallet->rebuildCart($transactionInfoArr['order_id']);
             $return = $digiwallet->updateOrderAfterCheck($transactionInfoArr, true);

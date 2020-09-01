@@ -1,5 +1,4 @@
 <?php
-
 global $_MODULE;
 $_MODULE = array();
 $_MODULE['<{digiwallet}prestashop>digiwallet_937aa5def2244f25d0d7262d96dba43f'] = 'Digiwallet for Prestashop';

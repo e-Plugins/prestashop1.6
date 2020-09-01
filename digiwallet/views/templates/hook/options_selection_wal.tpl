@@ -1,6 +1,6 @@
 {*
  * @author  DigiWallet.nl
- * @copyright Copyright (C) 2018 e-plugins.nl
+ * @copyright Copyright (C) 2020 e-plugins.nl
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * @url      http://www.e-plugins.nl
 *}
