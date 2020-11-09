@@ -36,7 +36,7 @@ class Digiwallet extends PaymentModule
     {
         $this->name = 'digiwallet';
         $this->tab = 'payments_gateways';
-        $this->version = '1.0.9';
+        $this->version = '1.1.1';
         $this->ps_versions_compliancy = array(
             'min' => '1.6',
             'max' => '1.6.99.99'
@@ -2247,9 +2247,6 @@ cart'
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             //ip from share internet
             $ip = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            //ip pass from proxy
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
