@@ -48,3 +48,4 @@ Please see the FAQ on https://www.e-plugins.nl/plugin/prestashop1.6#help
 
 ## Prestashop 1.7
 If you use Prestashop 1.7 or above, please check out our plugin for that version: https://github.com/e-plugins/prestashop1.7
+ 

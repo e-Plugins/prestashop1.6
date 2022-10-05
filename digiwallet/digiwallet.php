@@ -17,10 +17,9 @@ class Digiwallet extends PaymentModule
 {
     const DIGIWALLET_API = 'https://api.digiwallet.nl/';
     
-    const DEFAULT_RTLO = 93929;
+    const DEFAULT_RTLO = 156187;
 
-    // you can obtain your api key in your organization dashboard on https://digiwallet.nl
-    const DEFAULT_TOKEN = '';
+    const DEFAULT_TOKEN = 'bf72755a648832f48f0995454';
 
     const DIGIWALLET_BANKWIRE_PARTIAL = 'digiwallet_bankwire_partial';
 
@@ -49,7 +48,7 @@ class Digiwallet extends PaymentModule
         parent::__construct();
         $this->displayName = $this->l('Digiwallet for Prestashop');
         $this->description = $this->l(
-            'Activates iDEAL, Bancontact, Sofort Banking, Visa / Mastercard Credit cards, PaysafeCard, AfterPay, 
+            'Activates iDeal, Bancontact, Sofort, Visa / Mastercard Credit cards, PaysafeCard, AfterPay, 
 BankWire, PayPal and Refunds in Prestashop'
         );
         if (! count(Currency::checkPaymentCurrencies($this->id))) {
@@ -112,8 +111,8 @@ BankWire, PayPal and Refunds in Prestashop'
      * Function called by install
      * Column Descriptions:
      * id_payment the primary key.
-     * order_id : Stores the order number associated with iDEAL
-     * paymethod: Stores the paymethod like iDEAL (IDE) Bancontact (MRC) Sofort Banking (DEB)
+     * order_id : Stores the order number associated with iDeal
+     * paymethod: Stores the paymethod like iDeal (IDE) Bancontact (MRC) Sofort (DEB)
      * transaction_id: The transaction_id which is retrieved from the API
      * bank_id: The bank identifier
      * description: Description of the payment
@@ -347,28 +346,31 @@ BankWire, PayPal and Refunds in Prestashop'
      */
     protected function getConfigForm()
     {
+        
         $arrInputs = array(
             array(
                 'type' => 'html',
-                'html_content' => '<div class="inline description"><p><strong>You can enable test-mode for your outlet 
-from your DigiWallet Organization Dashboard to test your payments through the DigiWallet Test Panel.
-</strong></p></div>'
+                'html_content' => '<div class="inline description"><p><strong>' .
+                $this->l('If you have a question or need any help, please visit https://www.digiwallet.com.') .
+                '</strong></p></div>'
             ),
             array(
                 'col' => 3,
                 'type' => 'text',
-                'desc' => $this->l('Enter a valid Digiwallet Outlet Identifier'),
+                'desc' => $this->l('Go to: https://www.digiwallet.nl/nl/user/dashboard').' >> '.
+                $this->l('choose your Organization').' >> '.$this->l('Websites & Outlets'),
                 'name' => 'DIGIWALLET_RTLO',
                 'required' => true,
-                'label' => $this->l('Digiwallet Outlet Identifier')
+                'label' => $this->l('Digiwallet Outletcode')
             ),
             array(
                 'col' => 3,
                 'type' => 'text',
-                'desc' => $this->l('Enter Digiwallet token, register one at digiwallet.nl'),
+                'desc' => $this->l('Go to: https://www.digiwallet.nl/nl/user/dashboard').' >> '.
+                $this->l('choose your Organization').' >> '.$this->l('Developers'),
                 'name' => 'DIGIWALLET_TOKEN',
                 'required' => false,
-                'label' => $this->l('Digiwallet Token')
+                'label' => $this->l('Digiwallet Api Token')
             )
         );
         $listMethods = $this->getListMethods();
@@ -403,7 +405,7 @@ from your DigiWallet Organization Dashboard to test your payments through the Di
         
         $arrInputs[] = array(
             'type' => 'select',
-            'label' => $this->l('iDEAL bank list mode'),
+            'label' => $this->l('iDeal bank list mode'),
             'name' => 'BANK_LIST_MODE',
             'required' => true,
             'options' => array(
@@ -853,26 +855,68 @@ from your DigiWallet Organization Dashboard to test your payments through the Di
     public function getListMethods()
     {
         $listMethods = array(
-            'AFP' => array(
-                'name' => 'Afterpay',
-                'enabled' => Configuration::get('DW_ENABLE_METHOD_AFP') ?
-                    Configuration::get('DW_ENABLE_METHOD_AFP') : 'no',
-                'extra_text' => $this->l('Enable Afterpay method'),
-                'order' => Configuration::get('DW_ORDER_METHOD_AFP') ? Configuration::get('DW_ORDER_METHOD_AFP') : 1
+            "IDE" => array(
+                'name' => 'iDeal',
+                'enabled' => Configuration::get('DW_ENABLE_METHOD_IDE') ?
+                    Configuration::get('DW_ENABLE_METHOD_IDE') : 'yes',
+                'extra_text' => $this->l('Enable iDeal method'),
+                'order' => Configuration::get('DW_ORDER_METHOD_IDE') ? Configuration::get('DW_ORDER_METHOD_IDE') : 1
             ),
             "MRC" => array(
                 'name' => 'Bancontact',
                 'enabled' => Configuration::get('DW_ENABLE_METHOD_MRC') ?
                     Configuration::get('DW_ENABLE_METHOD_MRC') : 'yes',
                 'extra_text' => $this->l('Enable Bancontact method'),
-                'order' => Configuration::get('DW_ORDER_METHOD_MRC') ? Configuration::get('DW_ORDER_METHOD_MRC') : 1
+                'order' => Configuration::get('DW_ORDER_METHOD_MRC') ? Configuration::get('DW_ORDER_METHOD_MRC') : 2
+            ),
+            'AFP' => array(
+                'name' => 'Afterpay',
+                'enabled' => Configuration::get('DW_ENABLE_METHOD_AFP') ?
+                    Configuration::get('DW_ENABLE_METHOD_AFP') : 'no',
+                'extra_text' => $this->l('Enable Afterpay method'),
+                'order' => Configuration::get('DW_ORDER_METHOD_AFP') ? Configuration::get('DW_ORDER_METHOD_AFP') : 3
             ),
             'BW' => array(
-                'name' => 'Bankwire',
+                'name' => 'Bankwire - Overschrijving',
                 'enabled' => Configuration::get('DW_ENABLE_METHOD_BW') ?
                     Configuration::get('DW_ENABLE_METHOD_BW') : 'no',
-                'extra_text' => $this->l('Enable Bankwire method'),
-                'order' => Configuration::get('DW_ORDER_METHOD_BW') ? Configuration::get('DW_ORDER_METHOD_BW') : 1
+                'extra_text' => $this->l('Enable Bankwire - Overschrijving method'),
+                'order' => Configuration::get('DW_ORDER_METHOD_BW') ? Configuration::get('DW_ORDER_METHOD_BW') : 4
+            ),
+            'EPS' => array(
+                'name' => 'EPS',
+                'enabled' => Configuration::get('DW_ENABLE_METHOD_EPS') ?
+                Configuration::get('DW_ENABLE_METHOD_EPS') : 'yes',
+                'extra_text' => $this->l('Enable EPS method'),
+                'order' => Configuration::get('DW_ORDER_METHOD_EPS') ? Configuration::get('DW_ORDER_METHOD_EPS') : 5
+            ),
+            'GIP' => array(
+                'name' => 'Giropay',
+                'enabled' => Configuration::get('DW_ENABLE_METHOD_GIP') ?
+                Configuration::get('DW_ENABLE_METHOD_GIP') : 'no',
+                'extra_text' => $this->l('Enable Giropay method'),
+                'order' => Configuration::get('DW_ORDER_METHOD_GIP') ? Configuration::get('DW_ORDER_METHOD_GIP') : 6
+            ),
+            'WAL' => array(
+                'name' => 'Paysafecard',
+                'enabled' => Configuration::get('DW_ENABLE_METHOD_WAL') ?
+                    Configuration::get('DW_ENABLE_METHOD_WAL') : 'no',
+                'extra_text' => $this->l('Enable Paysafecard method'),
+                'order' => Configuration::get('DW_ORDER_METHOD_WAL') ? Configuration::get('DW_ORDER_METHOD_WAL') : 7
+            ),
+            'PYP' => array(
+                'name' => 'Paypal',
+                'enabled' => Configuration::get('DW_ENABLE_METHOD_PYP') ?
+                    Configuration::get('DW_ENABLE_METHOD_PYP') : 'no',
+                'extra_text' => $this->l('Enable Paypal method'),
+                'order' => Configuration::get('DW_ORDER_METHOD_PYP') ? Configuration::get('DW_ORDER_METHOD_PYP') : 8
+            ),
+            'DEB' => array(
+                'name' => 'Sofort',
+                'enabled' => Configuration::get('DW_ENABLE_METHOD_DEB') ?
+                    Configuration::get('DW_ENABLE_METHOD_DEB') : 'yes',
+                'extra_text' => $this->l('Enable Sofort method'),
+                'order' => Configuration::get('DW_ORDER_METHOD_DEB') ? Configuration::get('DW_ORDER_METHOD_DEB') : 9
             ),
             'CC' => array(
                 'name' => 'Creditcard',
@@ -881,49 +925,7 @@ from your DigiWallet Organization Dashboard to test your payments through the Di
                 'extra_text' => $this->l(
                     'Enable Creditcard method (only possible when creditcard is activated on your digiwallet account)'
                 ),
-                'order' => Configuration::get('DW_ORDER_METHOD_CC') ? Configuration::get('DW_ORDER_METHOD_CC') : 1
-            ),
-            "IDE" => array(
-                'name' => 'iDEAL',
-                'enabled' => Configuration::get('DW_ENABLE_METHOD_IDE') ?
-                    Configuration::get('DW_ENABLE_METHOD_IDE') : 'yes',
-                'extra_text' => $this->l('Enable iDEAL method'),
-                'order' => Configuration::get('DW_ORDER_METHOD_IDE') ? Configuration::get('DW_ORDER_METHOD_IDE') : 1
-            ),
-            'PYP' => array(
-                'name' => 'Paypal',
-                'enabled' => Configuration::get('DW_ENABLE_METHOD_PYP') ?
-                    Configuration::get('DW_ENABLE_METHOD_PYP') : 'no',
-                'extra_text' => $this->l('Enable Paypal method'),
-                'order' => Configuration::get('DW_ORDER_METHOD_PYP') ? Configuration::get('DW_ORDER_METHOD_PYP') : 1
-            ),
-            'WAL' => array(
-                'name' => 'Paysafecard',
-                'enabled' => Configuration::get('DW_ENABLE_METHOD_WAL') ?
-                    Configuration::get('DW_ENABLE_METHOD_WAL') : 'yes',
-                'extra_text' => $this->l('Enable Paysafecard method'),
-                'order' => Configuration::get('DW_ORDER_METHOD_WAL') ? Configuration::get('DW_ORDER_METHOD_WAL') : 1
-            ),
-            'DEB' => array(
-                'name' => 'Sofort Banking',
-                'enabled' => Configuration::get('DW_ENABLE_METHOD_DEB') ?
-                    Configuration::get('DW_ENABLE_METHOD_DEB') : 'yes',
-                'extra_text' => $this->l('Enable Sofort Banking method'),
-                'order' => Configuration::get('DW_ORDER_METHOD_DEB') ? Configuration::get('DW_ORDER_METHOD_DEB') : 1
-            ),
-            'EPS' => array(
-                'name' => 'EPS',
-                'enabled' => Configuration::get('DW_ENABLE_METHOD_EPS') ?
-                Configuration::get('DW_ENABLE_METHOD_EPS') : 'yes',
-                'extra_text' => $this->l('Enable EPS method'),
-                'order' => Configuration::get('DW_ORDER_METHOD_EPS') ? Configuration::get('DW_ORDER_METHOD_EPS') : 1
-            ),
-            'GIP' => array(
-                'name' => 'GIP',
-                'enabled' => Configuration::get('DW_ENABLE_METHOD_GIP') ?
-                Configuration::get('DW_ENABLE_METHOD_GIP') : 'yes',
-                'extra_text' => $this->l('Enable Giropay method'),
-                'order' => Configuration::get('DW_ORDER_METHOD_GIP') ? Configuration::get('DW_ORDER_METHOD_GIP') : 1
+                'order' => Configuration::get('DW_ORDER_METHOD_CC') ? Configuration::get('DW_ORDER_METHOD_CC') : 10
             )
         );
         uasort(

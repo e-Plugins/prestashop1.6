@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-xs-12 col-md-6">
         <p class="payment_module">
-            <a href="index.php?fc=module&module=digiwallet&controller=payment&method={$method|escape:'htmlall':'UTF-8'}" class="tp_method" title="Sofort Banking">
+            <a href="index.php?fc=module&module=digiwallet&controller=payment&method={$method|escape:'htmlall':'UTF-8'}" class="tp_method" title="Sofort">
             <img  src="{$this_path|escape:'htmlall':'UTF-8'}/views/img/{$method|escape:'htmlall':'UTF-8'}_50.png"/>
             </a>
         </p>
@@ -19,7 +19,7 @@
 <div class="row">
     <div class="col-xs-12 col-md-6">
         <p class="payment_module">
-            <a href="#" id="sofort-toggle" class="tp_method" title="Sofort Banking">
+            <a href="#" id="sofort-toggle" class="tp_method" title="Sofort">
             <img  src="{$this_path|escape:'htmlall':'UTF-8'}/views/img/{$method|escape:'htmlall':'UTF-8'}_50.png"/>
             </a>
         </p>
